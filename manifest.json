@@ -1,0 +1,21 @@
+{
+  "name": "「話すため」のフランス語文 全パターンドリル (Neural AI Edition)",
+  "short_name": "仏会話ドリル",
+  "description": "一切の省略を排除した超詳細カリキュラム・全50パターン1500問ネイティブニューラル音声ドリル",
+  "start_url": "./french_speaking_drill_neural.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
