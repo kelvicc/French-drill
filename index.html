@@ -89,33 +89,24 @@ body {
     gap: 8px;
 }
 
-.btn-mode-toggle {
-    background: rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.3);
-    color: #ffffff;
-    font-size: 0.76rem;
-    font-weight: 700;
-    padding: 5px 10px;
-    border-radius: 999px;
-    cursor: pointer;
-}
-.btn-mode-toggle.active {
-    background: #ffffff;
-    color: #1e3a8a;
-}
-
 .btn-drawer-open {
-    background: #3b82f6;
+    background: #2563eb;
     border: none;
     color: #ffffff;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 800;
-    padding: 6px 12px;
+    padding: 7px 14px;
     border-radius: 999px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: background 0.15s ease;
+}
+.btn-drawer-open:active {
+    background: #1d4ed8;
+    transform: scale(0.97);
 }
 
 /* メインコンテンツ領域 */
@@ -125,56 +116,30 @@ body {
     margin: 0 auto;
 }
 
-/* パート大見出しブロック（全文モード用） */
+/* 1問集中表示（常に選択パターンのみを独立表示） */
+.app-main-content > *:not(.pattern-card.focus-active) {
+    display: none !important;
+}
 .part-banner-block {
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-    color: #ffffff;
-    padding: 20px 18px;
-    border-radius: var(--radius-lg);
-    margin: 24px 0 20px 0;
-    box-shadow: var(--shadow-md);
-}
-.part-banner-block .part-banner {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    margin-bottom: 8px;
-}
-.part-banner-tag {
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    color: #93c5fd;
-    text-transform: uppercase;
-}
-.part-banner-block h1 {
-    margin: 0;
-    font-size: 1.22rem;
-    font-weight: 800;
-    line-height: 1.35;
-    color: #ffffff;
-}
-.part-lead-p {
-    font-size: 0.92rem;
-    color: #e0e7ff;
-    line-height: 1.6;
-    margin: 6px 0 0 0;
+    display: none !important;
 }
 
 /* パターンカード */
 .pattern-card {
+    display: none;
     background: var(--bg-card);
     border-radius: var(--radius-lg);
     padding: 16px 14px;
     margin-bottom: 20px;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-light);
-    scroll-margin-top: 65px;
+}
+.pattern-card.focus-active {
+    display: block !important;
 }
 
 .intro-card {
     border-left: 4px solid #3b82f6;
-    scroll-margin-top: 65px;
 }
 .intro-badge {
     background: #2563eb !important;
@@ -183,24 +148,6 @@ body {
     background: #1e40af !important;
     color: #ffffff !important;
     border: none !important;
-}
-
-.drill-section-head, .model-hero-card {
-    scroll-margin-top: 110px;
-}
-
-/* 1パターン集中モード時の表示制御（完全分離・不要要素一括非表示） */
-body.mode-focus .app-main-content > *:not(.pattern-card.focus-active) {
-    display: none !important;
-}
-body.mode-focus .pattern-card {
-    display: none;
-}
-body.mode-focus .pattern-card.focus-active {
-    display: block;
-}
-body.mode-focus .part-banner-block {
-    display: none !important;
 }
 
 .pat-top-bar {
@@ -1064,7 +1011,7 @@ body.mode-focus .part-banner-block {
 }
 </style>
 </head>
-<body class="mode-focus">
+<body>
 
 <!-- トップ固定バー -->
 <header class="mobile-top-bar">
@@ -1074,9 +1021,7 @@ body.mode-focus .part-banner-block {
             <span class="app-version-tag">Mobile</span>
         </div>
         <div class="top-bar-actions">
-            <button type="button" class="btn-mode-toggle active" id="btn-mode-focus" onclick="toggleDisplayMode('focus')">📱 1問集中</button>
-            <button type="button" class="btn-mode-toggle" id="btn-mode-all" onclick="toggleDisplayMode('all')">📜 全文</button>
-            <button type="button" class="btn-drawer-open" onclick="openDrawer()">☰ P一覧</button>
+            <button type="button" class="btn-drawer-open" onclick="openDrawer()">📖 パターン一覧 (全50) ☰</button>
         </div>
     </div>
 </header>
@@ -37049,29 +36994,20 @@ function goToPattern(patNum) {
     }
     currentPattern = patNum;
     
-    const isFocusMode = document.body.classList.contains('mode-focus');
     const targetId = (patNum === 'intro') ? 'pattern-intro' : ('pattern-' + patNum);
     const targetCard = document.getElementById(targetId);
     
-    if (isFocusMode) {
-        // 集中モード: 該当カードのみ表示し、最上部へスクロール
-        document.querySelectorAll('.pattern-card').forEach(card => {
-            if (card.getAttribute('data-pat-num') === patNum) {
-                card.classList.add('focus-active');
-            } else {
-                card.classList.remove('focus-active');
-            }
-        });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-        // 全文モード: 全カード表示のまま、該当カードの先頭位置へ正確にスムーズスクロール
-        if (targetCard) {
-            const topBar = document.querySelector('.mobile-top-bar');
-            const offset = (topBar ? topBar.offsetHeight : 54) + 10;
-            const targetPos = targetCard.getBoundingClientRect().top + window.pageYOffset - offset;
-            window.scrollTo({ top: Math.max(0, targetPos), behavior: 'smooth' });
+    // 該当カードのみをアクティブ化
+    document.querySelectorAll('.pattern-card').forEach(card => {
+        if (card.getAttribute('data-pat-num') === patNum) {
+            card.classList.add('focus-active');
+        } else {
+            card.classList.remove('focus-active');
         }
-    }
+    });
+    
+    // 常に画面最上部へスクロール
+    window.scrollTo({ top: 0, behavior: 'instant' });
     
     // ドロワー内のアクティブチップ更新
     document.querySelectorAll('.drawer-pat-chip, .drawer-intro-chip').forEach(c => c.classList.remove('active-chip'));
@@ -37084,36 +37020,7 @@ function goToPattern(patNum) {
     closeDrawer();
 }
 
-// 2. 表示モード切替 (1パターン集中 vs 全文スクロール)
-function toggleDisplayMode(mode) {
-    let btnFocus = document.getElementById('btn-mode-focus');
-    let btnAll = document.getElementById('btn-mode-all');
-    
-    if (mode === 'focus') {
-        document.body.classList.add('mode-focus');
-        btnFocus.classList.add('active');
-        btnAll.classList.remove('active');
-        localStorage.setItem('french_drill_view_mode', 'focus');
-        goToPattern(currentPattern);
-    } else {
-        document.body.classList.remove('mode-focus');
-        btnFocus.classList.remove('active');
-        btnAll.classList.add('active');
-        localStorage.setItem('french_drill_view_mode', 'all');
-        
-        // 全文モード切り替え時、現在学習中のカードへスクロール
-        let targetId = (currentPattern === 'intro') ? 'pattern-intro' : ('pattern-' + currentPattern);
-        let targetCard = document.getElementById(targetId);
-        if (targetCard) {
-            const topBar = document.querySelector('.mobile-top-bar');
-            const offset = (topBar ? topBar.offsetHeight : 54) + 10;
-            const targetPos = targetCard.getBoundingClientRect().top + window.pageYOffset - offset;
-            window.scrollTo({ top: Math.max(0, targetPos), behavior: 'smooth' });
-        }
-    }
-}
-
-// 3. ドロワーの開閉
+// 2. ドロワーの開閉
 function openDrawer() {
     document.getElementById('pattern-drawer').classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -37129,31 +37036,19 @@ function selectPatternFromDrawer(patNum) {
     goToPattern(patNum);
 }
 
-// 3-B. パート見出しへのジャンプ（ドロワーから）
+// 3. パート見出しタップ時：そのパートの最初のパターンを開く
 function goToSection(secId) {
     if (!secId) return;
-    const isFocusMode = document.body.classList.contains('mode-focus');
     const secEl = document.getElementById(secId);
-    if (isFocusMode) {
-        // 集中モードの場合、そのパートに属する最初のパターンを開く
-        if (secEl) {
-            let nextEl = secEl.nextElementSibling;
-            while (nextEl && !nextEl.classList.contains('pattern-card')) {
-                nextEl = nextEl.nextElementSibling;
-            }
-            if (nextEl) {
-                const pNum = nextEl.getAttribute('data-pat-num');
-                if (pNum) goToPattern(pNum);
-                return;
-            }
+    if (secEl) {
+        let nextEl = secEl.nextElementSibling;
+        while (nextEl && !nextEl.classList.contains('pattern-card')) {
+            nextEl = nextEl.nextElementSibling;
         }
-    } else {
-        // 全文モードの場合、パート見出しブロックへスムーズスクロール
-        if (secEl) {
-            const topBar = document.querySelector('.mobile-top-bar');
-            const offset = (topBar ? topBar.offsetHeight : 54) + 10;
-            const targetPos = secEl.getBoundingClientRect().top + window.pageYOffset - offset;
-            window.scrollTo({ top: Math.max(0, targetPos), behavior: 'smooth' });
+        if (nextEl) {
+            const pNum = nextEl.getAttribute('data-pat-num');
+            if (pNum) goToPattern(pNum);
+            return;
         }
     }
     closeDrawer();
@@ -37394,56 +37289,15 @@ function handleSwipe() {
     }
 }
 
-// 全文モード時のスクロール位置追跡（ScrollSpy）
-let scrollObserver = null;
-function initScrollObserver() {
-    const cards = document.querySelectorAll('.pattern-card');
-    if (!cards.length) return;
-    
-    if (scrollObserver) scrollObserver.disconnect();
-    
-    scrollObserver = new IntersectionObserver((entries) => {
-        if (document.body.classList.contains('mode-focus')) return;
-        
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const pNum = entry.target.getAttribute('data-pat-num');
-                if (pNum) {
-                    currentPattern = pNum;
-                    document.querySelectorAll('.drawer-pat-chip, .drawer-intro-chip').forEach(c => c.classList.remove('active-chip'));
-                    let chip = document.getElementById('chip-p-' + pNum);
-                    if (chip) chip.classList.add('active-chip');
-                    if (pNum !== 'intro') {
-                        localStorage.setItem('french_drill_last_pat', pNum);
-                    }
-                }
-            }
-        });
-    }, {
-        rootMargin: '-20% 0px -60% 0px',
-        threshold: 0
-    });
-    
-    cards.forEach(card => scrollObserver.observe(card));
-}
-
 // 初期化
 window.addEventListener('load', function() {
-    let savedMode = localStorage.getItem('french_drill_view_mode') || 'focus';
     let savedPat = localStorage.getItem('french_drill_last_pat');
     if (savedPat && savedPat !== 'intro') {
         currentPattern = savedPat;
     } else {
         currentPattern = "01";
     }
-    
-    if (savedMode === 'all') {
-        toggleDisplayMode('all');
-    } else {
-        toggleDisplayMode('focus');
-    }
-    
-    initScrollObserver();
+    goToPattern(currentPattern);
     
     // Service Worker
     if ('serviceWorker' in navigator) {
