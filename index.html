@@ -125,20 +125,40 @@ body {
     margin: 0 auto;
 }
 
-/* パート大見出し */
-.part-banner {
+/* パート大見出しブロック（全文モード用） */
+.part-banner-block {
     background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
     color: #ffffff;
-    padding: 18px 16px;
-    border-radius: var(--radius-md);
-    margin: 16px 0;
+    padding: 20px 18px;
+    border-radius: var(--radius-lg);
+    margin: 24px 0 20px 0;
     box-shadow: var(--shadow-md);
 }
-.part-banner h1 {
-    margin: 0;
-    font-size: 1.18rem;
+.part-banner-block .part-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+.part-banner-tag {
+    font-size: 0.72rem;
     font-weight: 800;
-    line-height: 1.4;
+    letter-spacing: 0.1em;
+    color: #93c5fd;
+    text-transform: uppercase;
+}
+.part-banner-block h1 {
+    margin: 0;
+    font-size: 1.22rem;
+    font-weight: 800;
+    line-height: 1.35;
+    color: #ffffff;
+}
+.part-lead-p {
+    font-size: 0.92rem;
+    color: #e0e7ff;
+    line-height: 1.6;
+    margin: 6px 0 0 0;
 }
 
 /* パターンカード */
@@ -151,15 +171,30 @@ body {
     border: 1px solid var(--border-light);
 }
 
-/* 1パターン集中モード時の表示制御 */
+.intro-card {
+    border-left: 4px solid #3b82f6;
+}
+.intro-badge {
+    background: #2563eb !important;
+}
+.next-nav-btn {
+    background: #1e40af !important;
+    color: #ffffff !important;
+    border: none !important;
+}
+
+/* 1パターン集中モード時の表示制御（完全分離・不要要素一括非表示） */
+body.mode-focus .app-main-content > *:not(.pattern-card.focus-active) {
+    display: none !important;
+}
 body.mode-focus .pattern-card {
     display: none;
 }
 body.mode-focus .pattern-card.focus-active {
     display: block;
 }
-body.mode-focus .part-banner {
-    display: none;
+body.mode-focus .part-banner-block {
+    display: none !important;
 }
 
 .pat-top-bar {
@@ -845,11 +880,64 @@ body.mode-focus .part-banner {
     justify-content: center;
 }
 
-.drawer-scroll-body {
-    overflow-y: auto;
-    padding-top: 10px;
-    flex: 1;
-    -webkit-overflow-scrolling: touch;
+.drawer-intro-section {
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.drawer-intro-chip {
+    width: 100%;
+    background: #eff6ff;
+    border: 1.5px solid #bfdbfe;
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.15s ease;
+}
+.drawer-intro-chip:active, .drawer-intro-chip.active-chip {
+    background: #dbeafe;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.intro-chip-badge {
+    background: #1e40af;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+
+.intro-chip-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.intro-chip-main {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #1e3a8a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.intro-chip-sub {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .drawer-part-group {
@@ -959,8 +1047,19 @@ body.mode-focus .part-banner {
 
 <!-- メインコンテンツ -->
 <main class="app-main-content">
-    <div id="section" class="part-banner"><h1>「話すため」のフランス語文 全パターンドリル</h1></div>
-<div id="sec--" class="part-banner"><h1>序論：フランス語を「口から瞬時に出す」ための発話原理とマインドセット</h1></div>
+    
+            <section id="pattern-intro" class="pattern-card intro-card" data-pat-num="intro">
+                <div class="pat-top-bar">
+                    <div class="pat-paging-chip">
+                        <span class="pat-num-badge intro-badge">📘 序論＆マインドセット</span>
+                    </div>
+                    <div class="pat-quick-nav">
+                        <button type="button" class="mini-drawer-btn" onclick="openDrawer()">一覧 ☰</button>
+                        <button type="button" class="mini-nav-btn next-nav-btn" onclick="goToPattern('01')">P01 開始 ▶</button>
+                    </div>
+                </div>
+                <h2 class="pattern-title">フランス語を「口から瞬時に出す」ための発話原理とマインドセット</h2>
+            
 <h3  class="section-title generic-head">1. なぜ「英語の直訳」ではフランス語が話せないのか？</h3>
 <p class="content-p">英語とフランス語は、一見すると同じSVO型言語に見えますが、<strong>「思考の出力順序（発話エンジン）」が根本から異なります</strong>。</p>
 <h4 class="sub-heading">①「代名詞の割り込み」という最大の壁</h4>
@@ -1020,9 +1119,24 @@ body.mode-focus .part-banner {
 「〜と言いたいとき」という現実のシチュエーションから、0.5秒でフランス語を発話する。
 （日本語からの英訳ではなく、感情・情景から直接フランス語の音を出す）</code></pre>
 <p class="content-p">次章より、フランス語を話すための全50パターンの徹底ドリルを開始します。</p>
-<div id="sec--1-" class="part-banner"><h1>第1部：基本骨格（コア構造と基本語順・人称変化の即時化）</h1></div>
-<p class="content-p">フランス語を話すための土台となる「文の骨格」を瞬時に組み立てるための全8パターン。</p>
-<p class="content-p">日本語の発想（述語が最後に来る）を捨て、「主語＋動詞」という最小単位のエネルギーを前方に放つ感覚を徹底的に身体化します。</p>
+
+                <footer class="pattern-footer-nav intro-footer">
+                    <div class="pat-nav-placeholder"></div>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('01')">P01 開始 ▶</button>
+                </footer>
+            </section><!-- /pattern-card intro -->
+            
+
+        <div id="sec--1-" class="part-banner-block">
+            <div class="part-banner">
+                <span class="part-banner-tag">PART</span>
+                <h1>第1部：基本骨格（コア構造と基本語順・人称変化の即時化）</h1>
+            </div>
+        
+<p class="part-lead-p">フランス語を話すための土台となる「文の骨格」を瞬時に組み立てるための全8パターン。</p>
+<p class="part-lead-p">日本語の発想（述語が最後に来る）を捨て、「主語＋動詞」という最小単位のエネルギーを前方に放つ感覚を徹底的に身体化します。</p>
+</div><!-- /part-banner-block -->
 
         <section id="pattern-01" class="pattern-card" data-pat-num="01">
             <div class="pat-top-bar">
@@ -1030,7 +1144,7 @@ body.mode-focus .part-banner {
                     <span class="pat-num-badge">Pattern 01 / 50</span>
                 </div>
                 <div class="pat-quick-nav">
-                    
+                    <button type="button" class="mini-nav-btn" onclick="goToPattern('intro')">◀ 序論</button>
                     <button type="button" class="mini-drawer-btn" onclick="openDrawer()">一覧 ☰</button>
                     <button type="button" class="mini-nav-btn" onclick="goToPattern('02')">▶</button>
                 </div>
@@ -1719,13 +1833,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>話し言葉での主語 `on` の絶対的支配</strong>:</li>
 <li class="content-li">会話において `nous` はほとんど使われません。基本はすべて <strong>`on`</strong>（活用は il と同じ）を使います。<em>On part.</em> <em>On mange.</em></li>
 
-            <footer class="pattern-footer-nav">
-                <div class="pat-nav-placeholder"></div>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('02')">P02 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('intro')">◀ 📘 序論</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('02')">P02 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-02" class="pattern-card" data-pat-num="02">
             <div class="pat-top-bar">
@@ -2423,13 +2537,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「私は〜です」で冠詞を付けない</strong>:</li>
 <li class="content-li">× <em>Je suis un professeur.</em> → ○ <em>Je suis professeur.</em>（身分・職業は形容詞化する）</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('01')">◀ P01</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('03')">P03 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('01')">◀ P01</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('03')">P03 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-03" class="pattern-card" data-pat-num="03">
             <div class="pat-top-bar">
@@ -3125,13 +3239,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>匂いは <em>sentir</strong></em>:</li>
 <li class="content-li"><em>Ça sent bon.</em>（いい匂い） / <em>Ça sent mauvais.</em>（臭い）。動詞 <em>sentir</em> は「感じる」だけでなく「匂いがする」として多用されます。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('02')">◀ P02</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('04')">P04 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('02')">◀ P02</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('04')">P04 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-04" class="pattern-card" data-pat-num="04">
             <div class="pat-top-bar">
@@ -3832,13 +3946,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>否定の de ルール</strong>:</li>
 <li class="content-li">日常会話で「お金がない」は <em>J'ai pas d'argent.</em>（<em>un</em> や <em>de l'</em> は <em>de</em> に変わる）。ただし定冠詞（<em>J'aime pas le vin</em>）はそのまま。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('03')">◀ P03</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('05')">P05 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('03')">◀ P03</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('05')">P05 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-05" class="pattern-card" data-pat-num="05">
             <div class="pat-top-bar">
@@ -4539,13 +4653,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>電話するは <em>appeler</em>（直接他動）vs <em>téléphoner à</em>（間接他動）</strong>:</li>
 <li class="content-li"><em>J'appelle Paul.</em>（直接） / <em>Je téléphone à Paul.</em>（間接）。代名詞化の際に形が変わるので注意。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('04')">◀ P04</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('06')">P06 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('04')">◀ P04</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('06')">P06 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-06" class="pattern-card" data-pat-num="06">
             <div class="pat-top-bar">
@@ -5244,13 +5358,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「質問する」は <em>demander une question</em> ではなく <em>poser une question</strong></em>:</li>
 <li class="content-li">最も多い誤りの1つ。質問は「置く（poser）」動詞を使います（<em>poser une question à qn</em>）。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('05')">◀ P05</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('07')">P07 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('05')">◀ P05</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('07')">P07 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-07" class="pattern-card" data-pat-num="07">
             <div class="pat-top-bar">
@@ -5948,13 +6062,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「〜したい気分」は <em>J'ai envie de + 不定詞</strong></em>:</li>
 <li class="content-li"><em>Je veux</em>（〜したい）よりも柔らかく日常会話で最も多用される表現です。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('06')">◀ P06</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('08')">P08 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('06')">◀ P06</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('08')">P08 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-08" class="pattern-card" data-pat-num="08">
             <div class="pat-top-bar">
@@ -6679,18 +6793,25 @@ body.mode-focus .part-banner {
 <li class="content-li">謝罪への返答: <strong>C'est pas grave.</strong>（大したことないよ）</li>
 <li class="content-li">感謝への返答: <strong>De rien. / Y a pas de souci.</strong>（どういたしまして）</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('07')">◀ P07</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('09')">P09 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('07')">◀ P07</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('09')">P09 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
+
+        <div id="sec--2-" class="part-banner-block">
+            <div class="part-banner">
+                <span class="part-banner-tag">PART</span>
+                <h1>第2部：代名詞前置システム（フランス語スピーキング最大の関門）</h1>
+            </div>
         
-<div id="sec--2-" class="part-banner"><h1>第2部：代名詞前置システム（フランス語スピーキング最大の関門）</h1></div>
-<p class="content-p">英語では代名詞になっても語順は変わりません（<em>I know Paul</em> → <em>I know him</em>）。</p>
-<p class="content-p">しかしフランス語では、名詞が代名詞になった瞬間に<strong>動詞の前</strong>にワープして割り込みます（<em>Je connais Paul</em> → <em>Je <strong>le</strong> connais</em>）。</p>
-<p class="content-p">さらに否定文では代名詞と動詞を否定辞が挟み込み（<em>Je <strong>ne</strong> le connais <strong>pas</strong></em>）、複合過去では過去分詞の性数一致が発生します。</p>
-<p class="content-p">本章では、フランス語を話すための「代名詞ブロック結合回路」を脳内に構築します。</p>
+<p class="part-lead-p">英語では代名詞になっても語順は変わりません（<em>I know Paul</em> → <em>I know him</em>）。</p>
+<p class="part-lead-p">しかしフランス語では、名詞が代名詞になった瞬間に<strong>動詞の前</strong>にワープして割り込みます（<em>Je connais Paul</em> → <em>Je <strong>le</strong> connais</em>）。</p>
+<p class="part-lead-p">さらに否定文では代名詞と動詞を否定辞が挟み込み（<em>Je <strong>ne</strong> le connais <strong>pas</strong></em>）、複合過去では過去分詞の性数一致が発生します。</p>
+<p class="part-lead-p">本章では、フランス語を話すための「代名詞ブロック結合回路」を脳内に構築します。</p>
+</div><!-- /part-banner-block -->
 
         <section id="pattern-09" class="pattern-card" data-pat-num="09">
             <div class="pat-top-bar">
@@ -7388,13 +7509,13 @@ body.mode-focus .part-banner {
 <li class="content-li">× <em>Je le vais faire.</em> → ○ <strong>Je vais le faire.</strong></li>
 <li class="content-li">不定詞（原型動詞）がある場合、代名詞は<strong>意味的に結びつく不定詞の直前</strong>に置きます。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('08')">◀ P08</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('10')">P10 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('08')">◀ P08</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('10')">P10 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-10" class="pattern-card" data-pat-num="10">
             <div class="pat-top-bar">
@@ -8095,13 +8216,13 @@ body.mode-focus .part-banner {
 <li class="content-li">× <em>Je la parle</em> (誤り)</li>
 <li class="content-li">○ <strong>Je lui parle.</strong>（男性・女性どちらも動詞の前では <strong>lui</strong>）</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('09')">◀ P09</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('11')">P11 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('09')">◀ P09</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('11')">P11 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-11" class="pattern-card" data-pat-num="11">
             <div class="pat-top-bar">
@@ -8802,13 +8923,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>数詞の残留</strong>:</li>
 <li class="content-li"><em>J'en ai.</em>（持ってる） / <em>J'en ai <strong>trois</strong>.</em>（3つ持ってる）。数字は必ず文末に残す！</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('10')">◀ P10</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('12')">P12 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('10')">◀ P10</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('12')">P12 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-12" class="pattern-card" data-pat-num="12">
             <div class="pat-top-bar">
@@ -9508,13 +9629,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>J'y arrive pas.</strong>（上手くいかない、できない）</li>
 <li class="content-li"><strong>J'y crois pas.</strong>（ありえない、信じられない）</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('11')">◀ P11</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('13')">P13 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('11')">◀ P11</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('13')">P13 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-13" class="pattern-card" data-pat-num="13">
             <div class="pat-top-bar">
@@ -10234,13 +10355,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Y en a」と「Y en a plus」の日常頻度</strong>:</li>
 <li class="content-li"><em>Il y en a</em> は口語で <strong>Y en a</strong> [jɑ̃.na]、否定は <strong>Y en a pas</strong> [jɑ̃.na.pa]、もうないは <strong>Y en a plus</strong> [jɑ̃.na.ply]。毎日10回は使う必須音です。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('12')">◀ P12</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('14')">P14 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('12')">◀ P12</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('14')">P14 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-14" class="pattern-card" data-pat-num="14">
             <div class="pat-top-bar">
@@ -10937,13 +11058,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「私も違う」は絶対に <em>Moi non plus</em> !</strong>:</li>
 <li class="content-li">相手が否定文（<em>Je ne veux pas sortir</em>）のとき、<em>Moi aussi</em> と言うと矛盾します。否定には必ず <strong>Moi non plus.</strong> で返します。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('13')">◀ P13</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('15')">P15 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('13')">◀ P13</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('15')">P15 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-15" class="pattern-card" data-pat-num="15">
             <div class="pat-top-bar">
@@ -11643,17 +11764,24 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>T'inquiète ! の超頻出省略</strong>:</li>
 <li class="content-li"><em>Ne t'inquiète pas</em> は日常会話では短縮されて単に <strong>T'inquiète !</strong> [tɛ̃.kjɛt]（タンキエット＝心配無用！）と言います。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('14')">◀ P14</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('16')">P16 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('14')">◀ P14</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('16')">P16 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
+
+        <div id="sec--3-" class="part-banner-block">
+            <div class="part-banner">
+                <span class="part-banner-tag">PART</span>
+                <h1>第3部：代名動詞ワールド（自他・相互・受動の身体化）</h1>
+            </div>
         
-<div id="sec--3-" class="part-banner"><h1>第3部：代名動詞ワールド（自他・相互・受動の身体化）</h1></div>
-<p class="content-p">英語の `myself / each other` は文末におまけのように置かれますが、フランス語の代名動詞（Verbes pronominaux）は、動詞と再帰代名詞（me, te, se, nous, vous, se）が完全に融合した<strong>言語の基幹幹部</strong>です。</p>
-<p class="content-p">日常生活の動作、相互のやり取り、受動・自発、そして心理状態のすべてが代名動詞で回っています。</p>
-<p class="content-p">主語人称に合わせて「je me / tu te / il se / on se / nous nous / vous vous / ils se」が0.1秒で口から出る神経回路を叩き込みます。</p>
+<p class="part-lead-p">英語の `myself / each other` は文末におまけのように置かれますが、フランス語の代名動詞（Verbes pronominaux）は、動詞と再帰代名詞（me, te, se, nous, vous, se）が完全に融合した<strong>言語の基幹幹部</strong>です。</p>
+<p class="part-lead-p">日常生活の動作、相互のやり取り、受動・自発、そして心理状態のすべてが代名動詞で回っています。</p>
+<p class="part-lead-p">主語人称に合わせて「je me / tu te / il se / on se / nous nous / vous vous / ils se」が0.1秒で口から出る神経回路を叩き込みます。</p>
+</div><!-- /part-banner-block -->
 
         <section id="pattern-16" class="pattern-card" data-pat-num="16">
             <div class="pat-top-bar">
@@ -12353,13 +12481,13 @@ body.mode-focus .part-banner {
 <li class="content-li">× <em>Tu dois se dépêcher.</em> → ○ <strong>Tu dois te dépêcher.</strong></li>
 <li class="content-li">不定詞の前でも、誰の動作かに応じて <em>me, te, nous</em> 等を瞬時に一致させます。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('15')">◀ P15</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('17')">P17 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('15')">◀ P15</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('17')">P17 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-17" class="pattern-card" data-pat-num="17">
             <div class="pat-top-bar">
@@ -13060,13 +13188,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>On se tutoie ?（タメ口にしない？）</strong>:</li>
 <li class="content-li">フランスの人間関係で一歩距離を縮める際の最重要キーワード。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('16')">◀ P16</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('18')">P18 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('16')">◀ P16</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('18')">P18 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-18" class="pattern-card" data-pat-num="18">
             <div class="pat-top-bar">
@@ -13762,13 +13890,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Ça s'est bien passé ?」は毎日の挨拶</strong>:</li>
 <li class="content-li">旅行、週末、仕事、デートから帰ってきた人に対する第一声は100%これです。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('17')">◀ P17</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('19')">P19 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('17')">◀ P17</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('19')">P19 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-19" class="pattern-card" data-pat-num="19">
             <div class="pat-top-bar">
@@ -14470,16 +14598,23 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>間違い電話の定番</strong>:</li>
 <li class="content-li"><em>Vous vous êtes trompé de numéro.</em>（番号をお間違えですよ）。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('18')">◀ P18</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('20')">P20 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('18')">◀ P18</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('20')">P20 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
+
+        <div id="sec--4-" class="part-banner-block">
+            <div class="part-banner">
+                <span class="part-banner-tag">PART</span>
+                <h1>第4部：時間軸とアスペクトの反射神経</h1>
+            </div>
         
-<div id="sec--4-" class="part-banner"><h1>第4部：時間軸とアスペクトの反射神経</h1></div>
-<p class="content-p">フランス語の会話における時間軸のコントロールは、文法問題を解くためのものではなく、<strong>「今・これから・たった今・完了した点・過去の背景」のカメラワークを瞬時に切り替える技術</strong>です。</p>
-<p class="content-p">日常会話では、活用が複雑な単純未来よりも圧倒的に「近接未来（aller + 不定詞）」が使われ、過去は「複合過去（点）」と「半過去（線）」のスイッチングが生命線となります。</p>
+<p class="part-lead-p">フランス語の会話における時間軸のコントロールは、文法問題を解くためのものではなく、<strong>「今・これから・たった今・完了した点・過去の背景」のカメラワークを瞬時に切り替える技術</strong>です。</p>
+<p class="part-lead-p">日常会話では、活用が複雑な単純未来よりも圧倒的に「近接未来（aller + 不定詞）」が使われ、過去は「複合過去（点）」と「半過去（線）」のスイッチングが生命線となります。</p>
+</div><!-- /part-banner-block -->
 
         <section id="pattern-20" class="pattern-card" data-pat-num="20">
             <div class="pat-top-bar">
@@ -15178,13 +15313,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>Ça va aller</strong>:</li>
 <li class="content-li">フランス人が毎日誰かを励ますときの国民的常套句。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('19')">◀ P19</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('21')">P21 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('19')">◀ P19</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('21')">P21 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-21" class="pattern-card" data-pat-num="21">
             <div class="pat-top-bar">
@@ -15884,13 +16019,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>à l'instant を添える</strong>:</li>
 <li class="content-li"><em>Je viens d'arriver à l'instant.</em> で「まさに今この瞬間」を強調。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('20')">◀ P20</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('22')">P22 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('20')">◀ P20</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('22')">P22 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-22" class="pattern-card" data-pat-num="22">
             <div class="pat-top-bar">
@@ -16590,13 +16725,13 @@ body.mode-focus .part-banner {
 <li class="content-li">○ <strong>J'ai tout compris.</strong>（× <em>J'ai compris tout</em>）</li>
 <li class="content-li">○ <strong>J'ai déjà mangé.</strong></li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('21')">◀ P21</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('23')">P23 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('21')">◀ P21</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('23')">P23 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-23" class="pattern-card" data-pat-num="23">
             <div class="pat-top-bar">
@@ -17295,13 +17430,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>代名動詞の過去は100% être</strong>:</li>
 <li class="content-li"><em>Je me suis couché</em>, <em>On s'est téléphoné</em>。絶対に avoir を使わないこと！</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('22')">◀ P22</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('24')">P24 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('22')">◀ P22</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('24')">P24 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-24" class="pattern-card" data-pat-num="24">
             <div class="pat-top-bar">
@@ -18001,13 +18136,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>依頼の前置きとしての半過去 <em>Je voulais...</strong></em>:</li>
 <li class="content-li">「〜したかった」という過去の意味ではなく、「〜したいのですが」という現在の控えめなニュアンスになります。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('23')">◀ P23</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('25')">P25 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('23')">◀ P23</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('25')">P25 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-25" class="pattern-card" data-pat-num="25">
             <div class="pat-top-bar">
@@ -18707,13 +18842,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「〜した（動作・一回）」は複合過去</strong>（J'ai fait, Je suis parti）。</li>
 <li class="content-li">この2つを意識するだけで、フランス語の過去の語りは劇的に自然になります。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('24')">◀ P24</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('26')">P26 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('24')">◀ P24</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('26')">P26 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-26" class="pattern-card" data-pat-num="26">
             <div class="pat-top-bar">
@@ -19414,16 +19549,23 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Ça te dirait de... ?」の無敵の誘い文句</strong>:</li>
 <li class="content-li">「〜するのはどう？気が向く？」と相手に伺いを立てる、最もスマートで好まれる誘い文句です。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('25')">◀ P25</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('27')">P27 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('25')">◀ P25</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('27')">P27 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
+
+        <div id="sec--5-" class="part-banner-block">
+            <div class="part-banner">
+                <span class="part-banner-tag">PART</span>
+                <h1>第5部：動詞句の拡張（助動詞・使役・知覚・非人称）</h1>
+            </div>
         
-<div id="sec--5-" class="part-banner"><h1>第5部：動詞句の拡張（助動詞・使役・知覚・非人称）</h1></div>
-<p class="content-p">基本文型の骨格に、不定詞（原形動詞）を従えることで表現の幅を一気に何倍にも広げる技術です。</p>
-<p class="content-p">「できる・しなければならない・〜させる・〜させておく・〜するのを見る」といった人間らしい複雑な意図を、最小の労力でスピーディに発話するための6大パターンを習得します。</p>
+<p class="part-lead-p">基本文型の骨格に、不定詞（原形動詞）を従えることで表現の幅を一気に何倍にも広げる技術です。</p>
+<p class="part-lead-p">「できる・しなければならない・〜させる・〜させておく・〜するのを見る」といった人間らしい複雑な意図を、最小の労力でスピーディに発話するための6大パターンを習得します。</p>
+</div><!-- /part-banner-block -->
 
         <section id="pattern-27" class="pattern-card" data-pat-num="27">
             <div class="pat-top-bar">
@@ -20125,13 +20267,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>Tu peux... ? の万能性</strong>:</li>
 <li class="content-li">フランス人にカジュアルに何かを頼むときは、9割 <strong>Tu peux + 不定詞 ?</strong> で済みます。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('26')">◀ P26</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('28')">P28 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('26')">◀ P26</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('28')">P28 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-28" class="pattern-card" data-pat-num="28">
             <div class="pat-top-bar">
@@ -20832,13 +20974,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Fais-moi signe」（合図してね＝連絡してね）</strong>:</li>
 <li class="content-li">会話で最も使われるカジュアルな「連絡してね」のフレーズ。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('27')">◀ P27</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('29')">P29 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('27')">◀ P27</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('29')">P29 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-29" class="pattern-card" data-pat-num="29">
             <div class="pat-top-bar">
@@ -21536,13 +21678,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>電話を切るときの「Je te laisse !」</strong>:</li>
 <li class="content-li">英語の "I have to let you go" と同じく、電話の会話を終了させる合図として <strong>Bon, je te laisse !</strong> と言います。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('28')">◀ P28</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('30')">P30 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('28')">◀ P28</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('30')">P30 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-30" class="pattern-card" data-pat-num="30">
             <div class="pat-top-bar">
@@ -22241,13 +22383,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Je te vois venir !」（魂胆が見え見えだよ）</strong>:</li>
 <li class="content-li">何か下心やおねだりがある相手に対して、笑顔で突っ込む超定番口語。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('29')">◀ P29</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('31')">P31 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('29')">◀ P29</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('31')">P31 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-31" class="pattern-card" data-pat-num="31">
             <div class="pat-top-bar">
@@ -22963,13 +23105,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Merci de + 不定詞」</strong>:</li>
 <li class="content-li"><em>Merci de me répondre.</em>（返信ありがとう）。前置詞は必ず <strong>de</strong> です。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('30')">◀ P30</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('32')">P32 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('30')">◀ P30</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('32')">P32 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-32" class="pattern-card" data-pat-num="32">
             <div class="pat-top-bar">
@@ -23668,16 +23810,23 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「C'est gentil de ta part」</strong>:</li>
 <li class="content-li">フランス人に親切にしてもらったときの最高級の感謝の返し文句。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('31')">◀ P31</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('33')">P33 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('31')">◀ P31</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('33')">P33 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
+
+        <div id="sec--6-" class="part-banner-block">
+            <div class="part-banner">
+                <span class="part-banner-tag">PART</span>
+                <h1>第6部：複文構造・リポート文・思考伝達</h1>
+            </div>
         
-<div id="sec--6-" class="part-banner"><h1>第6部：複文構造・リポート文・思考伝達</h1></div>
-<p class="content-p">「私は〜と思う」「彼が〜と言っていた」「〜かどうか分からない」「〜しなければならない（接続法）」といった、複文（文の中に別の文を組み込む構文）を口から出す技術です。</p>
-<p class="content-p">特に学習者が最も恐れる<strong>接続法（Subjonctif）</strong>を、文法理論ではなく「このトリガーが来たらこの音を反射する」というスピーキング専用の自動化ドリルで完全攻略します。</p>
+<p class="part-lead-p">「私は〜と思う」「彼が〜と言っていた」「〜かどうか分からない」「〜しなければならない（接続法）」といった、複文（文の中に別の文を組み込む構文）を口から出す技術です。</p>
+<p class="part-lead-p">特に学習者が最も恐れる<strong>接続法（Subjonctif）</strong>を、文法理論ではなく「このトリガーが来たらこの音を反射する」というスピーキング専用の自動化ドリルで完全攻略します。</p>
+</div><!-- /part-banner-block -->
 
         <section id="pattern-33" class="pattern-card" data-pat-num="33">
             <div class="pat-top-bar">
@@ -24378,13 +24527,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Je crois que oui / non」</strong>:</li>
 <li class="content-li">質問への返答で「そうだと思う / 違うと思う」と言いたいときの超頻出スマートフレーズ。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('32')">◀ P32</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('34')">P34 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('32')">◀ P32</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('34')">P34 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-34" class="pattern-card" data-pat-num="34">
             <div class="pat-top-bar">
@@ -25084,13 +25233,13 @@ body.mode-focus .part-banner {
 <li class="content-li">後ろに主語＋動詞が来るなら <strong>ce que</strong>（<em>ce que tu veux</em>）</li>
 <li class="content-li">この1秒の判断で一生迷わなくなります。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('33')">◀ P33</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('35')">P35 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('33')">◀ P33</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('35')">P35 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-35" class="pattern-card" data-pat-num="35">
             <div class="pat-top-bar">
@@ -25795,13 +25944,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Il faut qu'on parle」の重み</strong>:</li>
 <li class="content-li">英語の "We need to talk" と全く同じで、深刻な話し合いを切り出す定型句です。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('34')">◀ P34</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('36')">P36 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('34')">◀ P34</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('36')">P36 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-36" class="pattern-card" data-pat-num="36">
             <div class="pat-top-bar">
@@ -26500,13 +26649,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><em>Tu veux que je vienne ?</em>（行こうか？）</li>
 <li class="content-li"><em>Tu veux que je t'aide ?</em>（手伝おうか？）</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('35')">◀ P35</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('37')">P37 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('35')">◀ P35</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('37')">P37 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-37" class="pattern-card" data-pat-num="37">
             <div class="pat-top-bar">
@@ -27207,13 +27356,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「J'ai peur que...」の日常的な使い方</strong>:</li>
 <li class="content-li">恐怖だけでなく「〜じゃないといいけど（懸念）」という日常の心配事に多用されます。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('36')">◀ P36</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('38')">P38 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('36')">◀ P36</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('38')">P38 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-38" class="pattern-card" data-pat-num="38">
             <div class="pat-top-bar">
@@ -27916,16 +28065,23 @@ body.mode-focus .part-banner {
 <li class="content-li"><em>C'est possible</em> の接続法は <strong>ce soit possible</strong> [sə.swa.pɔ.si.bl]。</li>
 <li class="content-li">フランス人は否定思考のとき、考えずに反射で <strong>Je pense pas que ce soit...</strong>（ジュパンス・パク・スソワ）と口から音を出しています。このフレーズを1つの単語として覚えてしまうのが最も効果的です。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('37')">◀ P37</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('39')">P39 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('37')">◀ P37</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('39')">P39 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
+
+        <div id="sec--7-" class="part-banner-block">
+            <div class="part-banner">
+                <span class="part-banner-tag">PART</span>
+                <h1>第7部：修飾配列と描写のディテール付加</h1>
+            </div>
         
-<div id="sec--7-" class="part-banner"><h1>第7部：修飾配列と描写のディテール付加</h1></div>
-<p class="content-p">基本文型の骨格に、豊かなディテール（色、形、評価、関係詞による修飾、同時動作のジェロンディフ、論理接続）を肉付けして、表現を立体的にする技術です。</p>
-<p class="content-p">名詞の前後に置く形容詞の配置感覚や、フランス語スピーキングで流暢に文をつなぐ「関係代名詞4大システム（qui, que, où, dont）」を身体化します。</p>
+<p class="part-lead-p">基本文型の骨格に、豊かなディテール（色、形、評価、関係詞による修飾、同時動作のジェロンディフ、論理接続）を肉付けして、表現を立体的にする技術です。</p>
+<p class="part-lead-p">名詞の前後に置く形容詞の配置感覚や、フランス語スピーキングで流暢に文をつなぐ「関係代名詞4大システム（qui, que, où, dont）」を身体化します。</p>
+</div><!-- /part-banner-block -->
 
         <section id="pattern-39" class="pattern-card" data-pat-num="39">
             <div class="pat-top-bar">
@@ -28633,13 +28789,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「un petit...」のクッション言葉</strong>:</li>
 <li class="content-li">フランス人は何でも <em>un petit café</em>（コーヒー1杯）, <em>un petit problème</em>（ちょっとした問題）, <em>une petite minute</em>（1分だけ）と <em>petit</em> を添えて表現を柔らかくします。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('38')">◀ P38</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('40')">P40 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('38')">◀ P38</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('40')">P40 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-40" class="pattern-card" data-pat-num="40">
             <div class="pat-top-bar">
@@ -29341,13 +29497,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「C'est moi qui...」の一致ルール</strong>:</li>
 <li class="content-li"><em>C'est moi qui <strong>ai</strong> fait ça.</em>（× <em>a fait</em> ではない！moiの1人称に動詞が一致）。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('39')">◀ P39</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('41')">P41 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('39')">◀ P39</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('41')">P41 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-41" class="pattern-card" data-pat-num="41">
             <div class="pat-top-bar">
@@ -30046,13 +30202,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Ce que je veux dire, c'est que...」（私が言いたいのは…）</strong>:</li>
 <li class="content-li">自分の真意を再説明するときの前置きとして必須。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('40')">◀ P40</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('42')">P42 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('40')">◀ P40</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('42')">P42 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-42" class="pattern-card" data-pat-num="42">
             <div class="pat-top-bar">
@@ -30773,13 +30929,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「C'est là où je voulais en venir !」</strong>:</li>
 <li class="content-li">会話や議論で「そう、その結論に持っていきたかったんだ！」と合意を勝ち取るキラーフレーズ。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('41')">◀ P41</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('43')">P43 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('41')">◀ P41</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('43')">P43 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-43" class="pattern-card" data-pat-num="43">
             <div class="pat-top-bar">
@@ -31481,13 +31637,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>二重の de の脱落</strong>:</li>
 <li class="content-li">× <em>la chose dont j'ai besoin de</em>（文末に de を残さない！dont の中にすでに de が含まれています）。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('42')">◀ P42</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('44')">P44 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('42')">◀ P42</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('44')">P44 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-44" class="pattern-card" data-pat-num="44">
             <div class="pat-top-bar">
@@ -32190,13 +32346,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Tout en + 現在分詞」で「〜でありながらも」</strong>:</li>
 <li class="content-li">単なる同時動作だけでなく、大人なニュアンスの「〜しつつも、しかし」という譲歩を作れます。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('43')">◀ P43</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('45')">P45 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('43')">◀ P43</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('45')">P45 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-45" class="pattern-card" data-pat-num="45">
             <div class="pat-top-bar">
@@ -32899,16 +33055,23 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Puisque」のニュアンス</strong>:</li>
 <li class="content-li"><em>Parce que</em> は「相手が理由を知らない」とき。<em>Puisque</em> は「相手もすでに知っているわかりきった前提（せっかく〜なんだから）」のとき。この使い分けができると一気にネイティブ感が増します。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('44')">◀ P44</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('46')">P46 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('44')">◀ P44</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('46')">P46 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
+
+        <div id="sec--8-" class="part-banner-block">
+            <div class="part-banner">
+                <span class="part-banner-tag">PART</span>
+                <h1>第8部：リアル会話運用力（口語文法・リズム・強調）</h1>
+            </div>
         
-<div id="sec--8-" class="part-banner"><h1>第8部：リアル会話運用力（口語文法・リズム・強調）</h1></div>
-<p class="content-p">教科書に載っている文法通りに話しても、フランス人には「堅苦しい演説」に聞こえてしまうことがあります。</p>
-<p class="content-p">実際の日常会話の9割以上を占める<strong>「イントネーション疑問」「口語否定（ne落とし）」「脱臼構文」「つなぎ言葉（Connecteurs）」</strong>を身体化し、生き生きとしたフランス語を滑らかに口から出すための最終マスター章です。</p>
+<p class="part-lead-p">教科書に載っている文法通りに話しても、フランス人には「堅苦しい演説」に聞こえてしまうことがあります。</p>
+<p class="part-lead-p">実際の日常会話の9割以上を占める<strong>「イントネーション疑問」「口語否定（ne落とし）」「脱臼構文」「つなぎ言葉（Connecteurs）」</strong>を身体化し、生き生きとしたフランス語を滑らかに口から出すための最終マスター章です。</p>
+</div><!-- /part-banner-block -->
 
         <section id="pattern-46" class="pattern-card" data-pat-num="46">
             <div class="pat-top-bar">
@@ -33607,13 +33770,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>倒置疑問（Inversion）は会話では使わない！</strong>:</li>
 <li class="content-li">日常会話で友達に <em>Vas-tu au cinéma ?</em> と倒置で聞くと、貴族のような大げさで不自然な響きになります。会話では<strong>語尾上げイントネーション</strong>（<em>Tu vas au cinéma ?</em>）で聞くのが最も自然です。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('45')">◀ P45</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('47')">P47 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('45')">◀ P45</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('47')">P47 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-47" class="pattern-card" data-pat-num="47">
             <div class="pat-top-bar">
@@ -34318,13 +34481,13 @@ body.mode-focus .part-banner {
 <li class="content-li">何を食べる？: <em>Tu manges quoi ?</em></li>
 <li class="content-li">何を飲む？: <em>Tu bois quoi ?</em></li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('46')">◀ P46</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('48')">P48 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('46')">◀ P46</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('48')">P48 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-48" class="pattern-card" data-pat-num="48">
             <div class="pat-top-bar">
@@ -35029,13 +35192,13 @@ body.mode-focus .part-banner {
 <li class="content-li">肯定・比較（もっと）の plus は [plys]（プリュス）と s を発音する！</li>
 <li class="content-li">これを間違えると意味が真逆になるので注意。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('47')">◀ P47</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('49')">P49 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('47')">◀ P47</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('49')">P49 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-49" class="pattern-card" data-pat-num="49">
             <div class="pat-top-bar">
@@ -35758,13 +35921,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><em>C'est sympa, ce quartier !</em>（いいね、このエリア）</li>
 <li class="content-li">感想＋話題の順で口から出すだけで、一瞬でネイティブの発話リズムになります。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('48')">◀ P48</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('50')">P50 ▶</button>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('48')">◀ P48</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <button type="button" class="pat-nav-btn next-btn" onclick="goToPattern('50')">P50 ▶</button>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 
         <section id="pattern-50" class="pattern-card" data-pat-num="50">
             <div class="pat-top-bar">
@@ -36470,13 +36633,13 @@ body.mode-focus .part-banner {
 <li class="content-li"><strong>「Bref」のスマートさ</strong>:</li>
 <li class="content-li">長くなった愚痴やエピソードを「まあ要するにね！」と明るく締めくくる最高の相棒です。</li>
 
-            <footer class="pattern-footer-nav">
-                <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('49')">◀ P49</button>
-                <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
-                <div class="pat-nav-placeholder"></div>
-            </footer>
-        </section><!-- /pattern-card -->
-        
+                <footer class="pattern-footer-nav">
+                    <button type="button" class="pat-nav-btn prev-btn" onclick="goToPattern('49')">◀ P49</button>
+                    <button type="button" class="pat-drawer-trigger-btn" onclick="openDrawer()">📖 パターン一覧</button>
+                    <div class="pat-nav-placeholder"></div>
+                </footer>
+            </section><!-- /pattern-card -->
+            
 </main>
 
 <!-- フローティングボトム・プレイヤー -->
@@ -36503,6 +36666,16 @@ body.mode-focus .part-banner {
         </div>
         <div class="drawer-scroll-body">
             
+<div class="drawer-intro-section">
+    <button type="button" class="drawer-intro-chip" id="chip-p-intro" onclick="selectPatternFromDrawer('intro')">
+        <span class="intro-chip-badge">📘 ガイド</span>
+        <div class="intro-chip-text">
+            <span class="intro-chip-main">序論：発話原理とトレーニング方法</span>
+            <span class="intro-chip-sub">なぜ英語直訳では話せないのか / 音韻3原則</span>
+        </div>
+    </button>
+</div>
+
             <div class="drawer-part-group">
                 <div class="drawer-part-title">第1部：基本骨格（コア構造と基本語順・人称変化の即時化）</div>
                 <div class="drawer-grid">
@@ -36811,7 +36984,9 @@ let currentActiveElement = null;
 // 1. パターン移動（1パターン集中モード & スムーズスクロール）
 function goToPattern(patNum) {
     if (!patNum) return;
-    patNum = String(patNum).padStart(2, '0');
+    if (patNum !== 'intro') {
+        patNum = String(patNum).padStart(2, '0');
+    }
     currentPattern = patNum;
     
     // Update focus card
@@ -36824,13 +36999,15 @@ function goToPattern(patNum) {
     });
     
     // Update active chip in drawer
-    document.querySelectorAll('.drawer-pat-chip').forEach(c => c.classList.remove('active-chip'));
+    document.querySelectorAll('.drawer-pat-chip, .drawer-intro-chip').forEach(c => c.classList.remove('active-chip'));
     let chip = document.getElementById('chip-p-' + patNum);
     if (chip) chip.classList.add('active-chip');
     
     // Scroll to top of pattern
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    localStorage.setItem('french_drill_last_pat', patNum);
+    if (patNum !== 'intro') {
+        localStorage.setItem('french_drill_last_pat', patNum);
+    }
     closeDrawer();
 }
 
@@ -36848,7 +37025,8 @@ function toggleDisplayMode(mode) {
         document.body.classList.remove('mode-focus');
         btnFocus.classList.remove('active');
         btnAll.classList.add('active');
-        let activeCard = document.getElementById('pattern-' + currentPattern);
+        let targetId = (currentPattern === 'intro') ? 'pattern-intro' : ('pattern-' + currentPattern);
+        let activeCard = document.getElementById(targetId);
         if (activeCard) {
             activeCard.scrollIntoView({ behavior: 'smooth' });
         }
@@ -37073,13 +37251,24 @@ function handleSwipe() {
     if (!document.body.classList.contains('mode-focus')) return;
     let diff = touchStartX - touchEndX;
     if (Math.abs(diff) > 90) {
-        let num = parseInt(currentPattern);
-        if (diff > 0 && num < 50) {
-            // Left swipe -> Next
-            goToPattern(String(num + 1));
-        } else if (diff < 0 && num > 1) {
-            // Right swipe -> Prev
-            goToPattern(String(num - 1));
+        if (currentPattern === 'intro') {
+            if (diff > 0) {
+                // Left swipe -> Next (P01)
+                goToPattern('01');
+            }
+        } else {
+            let num = parseInt(currentPattern);
+            if (diff > 0 && num < 50) {
+                // Left swipe -> Next
+                goToPattern(String(num + 1));
+            } else if (diff < 0) {
+                // Right swipe -> Prev
+                if (num > 1) {
+                    goToPattern(String(num - 1));
+                } else if (num === 1) {
+                    goToPattern('intro');
+                }
+            }
         }
     }
 }
@@ -37087,8 +37276,10 @@ function handleSwipe() {
 // 初期化
 window.addEventListener('load', function() {
     let saved = localStorage.getItem('french_drill_last_pat');
-    if (saved) {
+    if (saved && saved !== 'intro') {
         currentPattern = saved;
+    } else {
+        currentPattern = "01";
     }
     goToPattern(currentPattern);
     
