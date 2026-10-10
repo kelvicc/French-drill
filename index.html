@@ -169,10 +169,12 @@ body {
     margin-bottom: 20px;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border-light);
+    scroll-margin-top: 65px;
 }
 
 .intro-card {
     border-left: 4px solid #3b82f6;
+    scroll-margin-top: 65px;
 }
 .intro-badge {
     background: #2563eb !important;
@@ -181,6 +183,10 @@ body {
     background: #1e40af !important;
     color: #ffffff !important;
     border: none !important;
+}
+
+.drill-section-head, .model-hero-card {
+    scroll-margin-top: 110px;
 }
 
 /* 1パターン集中モード時の表示制御（完全分離・不要要素一括非表示） */
@@ -961,9 +967,25 @@ body.mode-focus .part-banner-block {
 .drawer-part-title {
     font-size: 0.82rem;
     font-weight: 800;
-    color: #64748b;
+    color: #334155;
     margin-bottom: 6px;
-    padding-left: 2px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    background: #f1f5f9;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.15s ease;
+}
+.drawer-part-title:active {
+    background: #e2e8f0;
+    color: #1e3a8a;
+}
+.part-jump-arrow {
+    font-size: 0.72rem;
+    color: #2563eb;
+    font-weight: 800;
 }
 
 .drawer-grid {
@@ -36691,7 +36713,10 @@ body.mode-focus .part-banner-block {
 </div>
 
             <div class="drawer-part-group">
-                <div class="drawer-part-title">第1部：基本骨格（コア構造と基本語順・人称変化の即時化）</div>
+                <div class="drawer-part-title" onclick="goToSection('sec--1-')">
+                    <span>第1部：基本骨格（コア構造と基本語順・人称変化の即時化）</span>
+                    <span class="part-jump-arrow">➔</span>
+                </div>
                 <div class="drawer-grid">
         <button type="button" class="drawer-pat-chip" id="chip-p-01" onclick="selectPatternFromDrawer('01')">
             <span class="chip-num">P01</span>
@@ -36736,7 +36761,10 @@ body.mode-focus .part-banner-block {
             </div>
             
             <div class="drawer-part-group">
-                <div class="drawer-part-title">第2部：代名詞前置システム（フランス語スピーキング最大の関門）</div>
+                <div class="drawer-part-title" onclick="goToSection('sec--2-')">
+                    <span>第2部：代名詞前置システム（フランス語スピーキング最大の関門）</span>
+                    <span class="part-jump-arrow">➔</span>
+                </div>
                 <div class="drawer-grid">
         <button type="button" class="drawer-pat-chip" id="chip-p-09" onclick="selectPatternFromDrawer('09')">
             <span class="chip-num">P09</span>
@@ -36776,7 +36804,10 @@ body.mode-focus .part-banner-block {
             </div>
             
             <div class="drawer-part-group">
-                <div class="drawer-part-title">第3部：代名動詞ワールド（自他・相互・受動の身体化）</div>
+                <div class="drawer-part-title" onclick="goToSection('sec--3-')">
+                    <span>第3部：代名動詞ワールド（自他・相互・受動の身体化）</span>
+                    <span class="part-jump-arrow">➔</span>
+                </div>
                 <div class="drawer-grid">
         <button type="button" class="drawer-pat-chip" id="chip-p-16" onclick="selectPatternFromDrawer('16')">
             <span class="chip-num">P16</span>
@@ -36801,7 +36832,10 @@ body.mode-focus .part-banner-block {
             </div>
             
             <div class="drawer-part-group">
-                <div class="drawer-part-title">第4部：時間軸とアスペクトの反射神経</div>
+                <div class="drawer-part-title" onclick="goToSection('sec--4-')">
+                    <span>第4部：時間軸とアスペクトの反射神経</span>
+                    <span class="part-jump-arrow">➔</span>
+                </div>
                 <div class="drawer-grid">
         <button type="button" class="drawer-pat-chip" id="chip-p-20" onclick="selectPatternFromDrawer('20')">
             <span class="chip-num">P20</span>
@@ -36841,7 +36875,10 @@ body.mode-focus .part-banner-block {
             </div>
             
             <div class="drawer-part-group">
-                <div class="drawer-part-title">第5部：動詞句の拡張（助動詞・使役・知覚・非人称）</div>
+                <div class="drawer-part-title" onclick="goToSection('sec--5-')">
+                    <span>第5部：動詞句の拡張（助動詞・使役・知覚・非人称）</span>
+                    <span class="part-jump-arrow">➔</span>
+                </div>
                 <div class="drawer-grid">
         <button type="button" class="drawer-pat-chip" id="chip-p-27" onclick="selectPatternFromDrawer('27')">
             <span class="chip-num">P27</span>
@@ -36876,7 +36913,10 @@ body.mode-focus .part-banner-block {
             </div>
             
             <div class="drawer-part-group">
-                <div class="drawer-part-title">第6部：複文構造・リポート文・思考伝達</div>
+                <div class="drawer-part-title" onclick="goToSection('sec--6-')">
+                    <span>第6部：複文構造・リポート文・思考伝達</span>
+                    <span class="part-jump-arrow">➔</span>
+                </div>
                 <div class="drawer-grid">
         <button type="button" class="drawer-pat-chip" id="chip-p-33" onclick="selectPatternFromDrawer('33')">
             <span class="chip-num">P33</span>
@@ -36911,7 +36951,10 @@ body.mode-focus .part-banner-block {
             </div>
             
             <div class="drawer-part-group">
-                <div class="drawer-part-title">第7部：修飾配列と描写のディテール付加</div>
+                <div class="drawer-part-title" onclick="goToSection('sec--7-')">
+                    <span>第7部：修飾配列と描写のディテール付加</span>
+                    <span class="part-jump-arrow">➔</span>
+                </div>
                 <div class="drawer-grid">
         <button type="button" class="drawer-pat-chip" id="chip-p-39" onclick="selectPatternFromDrawer('39')">
             <span class="chip-num">P39</span>
@@ -36951,7 +36994,10 @@ body.mode-focus .part-banner-block {
             </div>
             
     <div class="drawer-part-group">
-        <div class="drawer-part-title">第8部：リアル会話運用力（口語文法・リズム・強調）</div>
+        <div class="drawer-part-title" onclick="goToSection('sec--8-')">
+            <span>第8部：リアル会話運用力（口語文法・リズム・強調）</span>
+            <span class="part-jump-arrow">➔</span>
+        </div>
         <div class="drawer-grid">
         <button type="button" class="drawer-pat-chip" id="chip-p-46" onclick="selectPatternFromDrawer('46')">
             <span class="chip-num">P46</span>
@@ -36995,7 +37041,7 @@ let continuousIdx = 0;
 let activeContinuousBtn = null;
 let currentActiveElement = null;
 
-// 1. パターン移動（1パターン集中モード & スムーズスクロール）
+// 1. パターン移動（1パターン集中モード & 全文スクロールモード両対応）
 function goToPattern(patNum) {
     if (!patNum) return;
     if (patNum !== 'intro') {
@@ -37003,22 +37049,35 @@ function goToPattern(patNum) {
     }
     currentPattern = patNum;
     
-    // Update focus card
-    document.querySelectorAll('.pattern-card').forEach(card => {
-        if (card.getAttribute('data-pat-num') === patNum) {
-            card.classList.add('focus-active');
-        } else {
-            card.classList.remove('focus-active');
-        }
-    });
+    const isFocusMode = document.body.classList.contains('mode-focus');
+    const targetId = (patNum === 'intro') ? 'pattern-intro' : ('pattern-' + patNum);
+    const targetCard = document.getElementById(targetId);
     
-    // Update active chip in drawer
+    if (isFocusMode) {
+        // 集中モード: 該当カードのみ表示し、最上部へスクロール
+        document.querySelectorAll('.pattern-card').forEach(card => {
+            if (card.getAttribute('data-pat-num') === patNum) {
+                card.classList.add('focus-active');
+            } else {
+                card.classList.remove('focus-active');
+            }
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        // 全文モード: 全カード表示のまま、該当カードの先頭位置へ正確にスムーズスクロール
+        if (targetCard) {
+            const topBar = document.querySelector('.mobile-top-bar');
+            const offset = (topBar ? topBar.offsetHeight : 54) + 10;
+            const targetPos = targetCard.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: Math.max(0, targetPos), behavior: 'smooth' });
+        }
+    }
+    
+    // ドロワー内のアクティブチップ更新
     document.querySelectorAll('.drawer-pat-chip, .drawer-intro-chip').forEach(c => c.classList.remove('active-chip'));
     let chip = document.getElementById('chip-p-' + patNum);
     if (chip) chip.classList.add('active-chip');
     
-    // Scroll to top of pattern
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (patNum !== 'intro') {
         localStorage.setItem('french_drill_last_pat', patNum);
     }
@@ -37034,15 +37093,22 @@ function toggleDisplayMode(mode) {
         document.body.classList.add('mode-focus');
         btnFocus.classList.add('active');
         btnAll.classList.remove('active');
+        localStorage.setItem('french_drill_view_mode', 'focus');
         goToPattern(currentPattern);
     } else {
         document.body.classList.remove('mode-focus');
         btnFocus.classList.remove('active');
         btnAll.classList.add('active');
+        localStorage.setItem('french_drill_view_mode', 'all');
+        
+        // 全文モード切り替え時、現在学習中のカードへスクロール
         let targetId = (currentPattern === 'intro') ? 'pattern-intro' : ('pattern-' + currentPattern);
-        let activeCard = document.getElementById(targetId);
-        if (activeCard) {
-            activeCard.scrollIntoView({ behavior: 'smooth' });
+        let targetCard = document.getElementById(targetId);
+        if (targetCard) {
+            const topBar = document.querySelector('.mobile-top-bar');
+            const offset = (topBar ? topBar.offsetHeight : 54) + 10;
+            const targetPos = targetCard.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: Math.max(0, targetPos), behavior: 'smooth' });
         }
     }
 }
@@ -37061,6 +37127,36 @@ function handleBackdropClick(e) {
 }
 function selectPatternFromDrawer(patNum) {
     goToPattern(patNum);
+}
+
+// 3-B. パート見出しへのジャンプ（ドロワーから）
+function goToSection(secId) {
+    if (!secId) return;
+    const isFocusMode = document.body.classList.contains('mode-focus');
+    const secEl = document.getElementById(secId);
+    if (isFocusMode) {
+        // 集中モードの場合、そのパートに属する最初のパターンを開く
+        if (secEl) {
+            let nextEl = secEl.nextElementSibling;
+            while (nextEl && !nextEl.classList.contains('pattern-card')) {
+                nextEl = nextEl.nextElementSibling;
+            }
+            if (nextEl) {
+                const pNum = nextEl.getAttribute('data-pat-num');
+                if (pNum) goToPattern(pNum);
+                return;
+            }
+        }
+    } else {
+        // 全文モードの場合、パート見出しブロックへスムーズスクロール
+        if (secEl) {
+            const topBar = document.querySelector('.mobile-top-bar');
+            const offset = (topBar ? topBar.offsetHeight : 54) + 10;
+            const targetPos = secEl.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top: Math.max(0, targetPos), behavior: 'smooth' });
+        }
+    }
+    closeDrawer();
 }
 
 // 4. 音声速度変更
@@ -37298,15 +37394,56 @@ function handleSwipe() {
     }
 }
 
+// 全文モード時のスクロール位置追跡（ScrollSpy）
+let scrollObserver = null;
+function initScrollObserver() {
+    const cards = document.querySelectorAll('.pattern-card');
+    if (!cards.length) return;
+    
+    if (scrollObserver) scrollObserver.disconnect();
+    
+    scrollObserver = new IntersectionObserver((entries) => {
+        if (document.body.classList.contains('mode-focus')) return;
+        
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const pNum = entry.target.getAttribute('data-pat-num');
+                if (pNum) {
+                    currentPattern = pNum;
+                    document.querySelectorAll('.drawer-pat-chip, .drawer-intro-chip').forEach(c => c.classList.remove('active-chip'));
+                    let chip = document.getElementById('chip-p-' + pNum);
+                    if (chip) chip.classList.add('active-chip');
+                    if (pNum !== 'intro') {
+                        localStorage.setItem('french_drill_last_pat', pNum);
+                    }
+                }
+            }
+        });
+    }, {
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+    });
+    
+    cards.forEach(card => scrollObserver.observe(card));
+}
+
 // 初期化
 window.addEventListener('load', function() {
-    let saved = localStorage.getItem('french_drill_last_pat');
-    if (saved && saved !== 'intro') {
-        currentPattern = saved;
+    let savedMode = localStorage.getItem('french_drill_view_mode') || 'focus';
+    let savedPat = localStorage.getItem('french_drill_last_pat');
+    if (savedPat && savedPat !== 'intro') {
+        currentPattern = savedPat;
     } else {
         currentPattern = "01";
     }
-    goToPattern(currentPattern);
+    
+    if (savedMode === 'all') {
+        toggleDisplayMode('all');
+    } else {
+        toggleDisplayMode('focus');
+    }
+    
+    initScrollObserver();
     
     // Service Worker
     if ('serviceWorker' in navigator) {
