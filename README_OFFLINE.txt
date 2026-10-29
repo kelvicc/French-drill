@@ -26,7 +26,7 @@
 
 ■ 用途に合わせた2つのHTMLプレイヤー
 1. 【スマホで学習する場合（推奨）】
-   →「french_speaking_drill_neural_mobile.html」（または「index.html」）
+   →「index.html」
    ・1パターン集中モード（左右スワイプや次へボタンで1画面ずつ集中学習）
    ・「🔥 動詞特訓」カードへのワンタップ移動＆P一覧ドロワー
    ・親指タップに最適化した大きなタッチボタン（48px+）
@@ -35,21 +35,22 @@
    ・画面下部の常駐ミニプレイヤー（速度切替・停止）
 
 2. 【PCやiPad・大画面で学習する場合】
-   →「french_speaking_drill_neural.html」
+   →「index2.html」
    ・左側サイドバー目次付きのワイドレイアウト（動詞特訓へワンクリック移動）
+   ・10問連続自動再生（シャドーイングモード）
+   ・再生速度切り替え（0.75x / 1.0x / 1.25x）
 
 ■ 使い方
 1. 本ZIPファイルを任意のフォルダに解凍（展開）してください。
-2. 上記のお好みのHTMLファイルをブラウザ（Safari, Chrome, Edge等）で開きます。
+2. 上記のお好みのHTMLファイル（スマホは index.html、PCは index2.html）をブラウザ（Safari, Chrome, Edge等）で開きます。
 3. ネット接続なしですぐにネイティブ音声が再生されます。
 
 ■ ファイル構成
-- index.html                                : スマホ最適化プレイヤー（メイン入口）
-- french_speaking_drill_neural_mobile.html : スマホ最適化プレイヤー
-- french_speaking_drill_neural.html        : PC/タブレット向けプレイヤー
-- sw.js, manifest.json                     : PWAオフライン動作用ファイル
-- audio/                                   : ニューラルAI音声 MP3ファイル群 (2,129ファイル)
-  - audio/*.mp3                            : パターンドリル音声 (1,978ファイル)
-  - audio/verbs/*.mp3                      : 重要動詞活用音声 (150ファイル)
-- README_OFFLINE.txt                      : 本説明書
+- index.html               : スマホ最適化プレイヤー（メイン入口）
+- index2.html              : PC/タブレット向けプレイヤー
+- sw.js, manifest.json    : PWAオフライン動作用ファイル
+- audio/                  : ニューラルAI音声 MP3ファイル群 (2,129ファイル)
+  - audio/*.mp3           : パターンドリル音声 (1,978ファイル)
+  - audio/verbs/*.mp3     : 重要動詞活用音声 (150ファイル)
+- README_OFFLINE.txt     : 本説明書
 ========================================================================

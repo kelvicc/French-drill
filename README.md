@@ -8,7 +8,7 @@
 
 電波の届かない機内、地下鉄、海外渡航先など、完全オフライン環境で音声を100%再生したい場合は、以下の同梱ZIPファイルをダウンロードして端末で解凍してご利用ください。
 
-- **[📥 french_speaking_drill_neural_complete.zip](./french_speaking_drill_neural_complete.zip)**（約 25.2 MB / 全 2,129 音声ファイル同梱）
+- **[📥 french_speaking_drill_neural_complete.zip](./french_speaking_drill_neural_complete.zip)**（約 24.9 MB / 全 2,129 音声ファイル同梱）
 
 ### オフライン版の使い方
 1. 上記の `french_speaking_drill_neural_complete.zip` をダウンロードします。
@@ -16,19 +16,19 @@
    - **iPhone**: 標準「ファイル」アプリでタップするだけで自動展開されます（または「Documents by Readdle」アプリ等）。
    - **Android**: 標準「Files」アプリ等で解凍します。
    - **PC / Mac**: ダブルクリック等で解凍します。
-3. 展開されたフォルダ内の `index.html` をブラウザ（Safari, Chrome, Edge等）で開きます。
+3. 展開されたフォルダ内の **`index.html`**（スマホ）または **`index2.html`**（PC）をブラウザで開きます。
 4. インターネット接続が一切ない状態でも、すべてのネイティブ音声（2,129ファイル）が即座に再生されます。
 
 ---
 
 ## 📱 オンライン（GitHub Pages）での学習
 
-本リポジトリは GitHub Pages にも対応しており、用途に合わせて2種類の最適化プレイヤーを用意しています。
+本リポジトリは GitHub Pages にも対応しており、端末に合わせて2種類の最適化プレイヤーを用意しています。
 
 | プレイヤー | 推奨環境 | 特徴 |
 | :--- | :--- | :--- |
-| **[index.html](./index.html)**<br>（または [french_speaking_drill_neural_mobile.html](./french_speaking_drill_neural_mobile.html)） | **スマートフォン（iPhone / Android）** | ・1パターン集中モード（横スワイプ・次へボタンで1画面ずつ学習）<br>・親指タップに最適化した大きなタッチボタン<br>・ドリルB「対話再生（男女掛け合い）」<br>・ドリルC「フラッシュカード式（ワンタップ展開）」<br>・全パターン一覧ドロワーメニュー |
-| **[index2.html](./index2.html)**<br>（または [french_speaking_drill_neural.html](./french_speaking_drill_neural.html)） | **PC / Mac / iPad / タブレット** | ・左側固定サイドバー目次付きワイドレイアウト<br>・10問連続自動再生（シャドーイングモード）<br>・再生速度切り替え（0.75x / 1.0x / 1.25x） |
+| **[index.html](./index.html)** | **スマートフォン（iPhone / Android）** | ・1パターン集中モード（横スワイプ・次へボタンで1画面ずつ学習）<br>・親指タップに最適化した大きなタッチボタン<br>・ドリルB「対話再生（男女掛け合い）」<br>・ドリルC「フラッシュカード式（ワンタップ展開）」<br>・全パターン一覧ドロワーメニュー |
+| **[index2.html](./index2.html)** | **PC / Mac / iPad / タブレット** | ・左側固定サイドバー目次付きワイドレイアウト<br>・10問連続自動再生（シャドーイングモード）<br>・再生速度切り替え（0.75x / 1.0x / 1.25x） |
 
 ---
 
@@ -54,11 +54,9 @@
 
 ```text
 French-drill/
-├── french_speaking_drill_neural_complete.zip  # 完全オフラインZIPパッケージ（25.2MB）
 ├── index.html                                  # スマホ最適化プレイヤー（メイン入口）
 ├── index2.html                                 # PC/タブレット向けワイドプレイヤー
-├── french_speaking_drill_neural_mobile.html    # スマホ最適化版スタンドアロンファイル
-├── french_speaking_drill_neural.html           # PC/タブレット版スタンドアロンファイル
+├── french_speaking_drill_neural_complete.zip  # 完全オフラインZIPパッケージ（24.9MB）
 ├── README_OFFLINE.txt                          # オフライン利用説明書
 ├── README.md                                   # 本リポジトリ説明書
 ├── manifest.json                               # PWAマニフェストファイル

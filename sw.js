@@ -1,9 +1,9 @@
 // Service Worker for Offline Neural Audio Caching
-const CACHE_NAME = 'french-drill-neural-v1';
+const CACHE_NAME = 'french-drill-neural-v2';
 
 const STATIC_ASSETS = [
-  './french_speaking_drill_neural.html',
-  './french_speaking_drill_neural_mobile.html',
+  './index.html',
+  './index2.html',
   './manifest.json'
 ];
 
@@ -52,7 +52,7 @@ self.addEventListener('fetch', (event) => {
       });
     }).catch(() => {
       // Offline fallback
-      return caches.match('./french_speaking_drill_neural.html');
+      return caches.match('./index.html');
     })
   );
 });
