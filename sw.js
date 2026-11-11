@@ -1,9 +1,8 @@
 // Service Worker for Offline Neural Audio Caching
-const CACHE_NAME = 'french-drill-neural-v2';
+const CACHE_NAME = 'french-drill-neural-v11';
 
 const STATIC_ASSETS = [
   './index.html',
-  './index2.html',
   './manifest.json'
 ];
 
